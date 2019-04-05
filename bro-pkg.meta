@@ -1,0 +1,8 @@
+[package]
+description = Detection of the execution of downloaded Internet files on osquery hosts.
+tags = osquery, detection, internet files, execution
+version = 0.1.0
+depends =
+  zeek-osquery-framework ~0.1.0
+  zeek-osquery-state ~0.1.0
+script_dir = scripts
