@@ -82,6 +82,9 @@ event osquery::download_execution::smtp::attachment_recved(attachment: Attachmen
         att = attachments[hash];
     } else {
         att = [$file_hash = hash];
+        att$file_ids = set();
+        att$tos = set();
+        att$file_names = set();
         attachments[hash] = att;
     }
 
