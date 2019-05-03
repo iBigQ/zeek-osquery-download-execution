@@ -33,7 +33,7 @@ export {
     };
 
     # Event for received email attachment
-    global attachment_recved: event(attachment: Attachment);
+    global attachment_added: event(attachment: Attachment);
 
     # Function to retrieve attachment state for a given hash
     global getAttachmentStateByHash: function(hash: string): set[Attachment_State];
@@ -74,7 +74,7 @@ event osquery::download_execution::smtp::scheduled_remove_hash(hash: string) {
     delete attachments[hash];
 }
 
-event osquery::download_execution::smtp::attachment_recved(attachment: Attachment) {
+event osquery::download_execution::smtp::attachment_added(attachment: Attachment) {
     # New or existing hash
     local hash = attachment$file_hash;
     local att: Attachment_State;
@@ -223,7 +223,10 @@ event file_hash(f: fa_file, kind: string, hash: string) {
         if (upload$content_disposition != "") { attachment$content_disposition = upload$content_disposition; }
 
         # Valid file attachment
-        event osquery::download_execution::smtp::attachment_recved(attachment);
+        event osquery::download_execution::smtp::attachment_added(attachment);
+	if ( Cluster::local_node_type() == Cluster::WORKER ) {
+		Broker::publish(Cluster::manager_topic, osquery::download_execution::smtp::attachment_added, attachment);
+	}
     }
 }
 

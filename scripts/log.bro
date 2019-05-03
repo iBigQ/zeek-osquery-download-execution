@@ -14,6 +14,7 @@ export {
     };
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event osquery::download_execution::smtp_attachment_execution(host_id: string, file_hash: string, tos: set[string], file_names: set[string]) {
     local info: Info = [
         $host_id = host_id,
@@ -24,6 +25,7 @@ event osquery::download_execution::smtp_attachment_execution(host_id: string, fi
 
     Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
     Log::create_stream(LOG, [$columns=Info, $path="osq-smtp-execution"]);

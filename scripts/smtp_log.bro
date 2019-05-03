@@ -17,7 +17,7 @@ export {
     };
 }
 
-event osquery::download_execution::smtp::attachment_recved(attachment: osquery::download_execution::smtp::Attachment) {
+event osquery::download_execution::smtp::attachment_added(attachment: osquery::download_execution::smtp::Attachment) {
     local info: Info = [
         $file_id = attachment$file_id,
         $file_hash = attachment$file_hash,
