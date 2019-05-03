@@ -1,7 +1,7 @@
 #! Detects execution of downloaded files.
 
 @load zeek-osquery-framework
-@load zeek-osquery-state/processes
+@load zeek-osquery-state
 
 module osquery::download_execution;
 
